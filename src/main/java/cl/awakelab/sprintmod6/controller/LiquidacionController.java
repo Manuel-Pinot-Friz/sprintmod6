@@ -1,7 +1,10 @@
 package cl.awakelab.sprintmod6.controller;
 
 import cl.awakelab.sprintmod6.entity.Liquidacion;
+import cl.awakelab.sprintmod6.service.IInstPrevService;
+import cl.awakelab.sprintmod6.service.IInstitucionSaludService;
 import cl.awakelab.sprintmod6.service.ILiquidacionService;
+import cl.awakelab.sprintmod6.service.ITrabajadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,12 @@ import java.util.List;
 public class LiquidacionController {
     @Autowired
     ILiquidacionService objILiquidacionService;
+    @Autowired
+    ITrabajadorService objITrabajadorService;
+    @Autowired
+    IInstPrevService objIInstPrevService;
+    @Autowired
+    IInstitucionSaludService objIInstitucionSaludService;
 
     @GetMapping
     public String listarLiquidaciones(Model model) {
@@ -22,27 +31,46 @@ public class LiquidacionController {
         return "listarLiquidaciones";
     }
 
-    @PostMapping("/crearLiquidacion")
-    public Liquidacion crearLiquidacion(@RequestBody Liquidacion liquidacion){
-        return objILiquidacionService.crearLiquidacion(liquidacion);
+    @GetMapping("/crearLiquidacion")
+    public String mostrarFormularioCrearLiquidacion(Model model){
+        model.addAttribute("trabajadores", objITrabajadorService.listarTrabajadores());
+        model.addAttribute("listaInstSalud", objIInstitucionSaludService.listarInstitucionSalud());
+        model.addAttribute("listaInstPrevision", objIInstPrevService.listarInstPrev());
+        return "crearLiquidacion";
     }
 
+    @PostMapping("/crearLiquidacion")
+    public String crearLiquidacion(@ModelAttribute Liquidacion liquidacion){
+        objILiquidacionService.crearLiquidacion(liquidacion);
+        return "redirect:/crearLiquidacion";
+    }
 
     @GetMapping("/{idLiquidacion}")
     public String buscarLiquidacionPorId(@PathVariable long idLiquidacion, Model model) {
         Liquidacion liquidacion = objILiquidacionService.buscarLiquidacionPorId(idLiquidacion);
         model.addAttribute("liquidacion",liquidacion);
-        return "liquidacion";
+        return "redirect:/liquidacion";
     }
 
-
-    @PutMapping
-    public Liquidacion actualizarLiquidacion(@RequestBody Liquidacion liquidacion) {
-        return objILiquidacionService.actualizarLiquidacion(liquidacion);
+    @PostMapping("/editar/{idLiquidacion}")
+    public String mostrarFormularioEditarLiquidacion(@PathVariable int idLiquidacion, Model model){
+        model.addAttribute("liquidacion", objILiquidacionService.buscarLiquidacionPorId(idLiquidacion));
+        model.addAttribute("trabajadores", objITrabajadorService.listarTrabajadores());
+        model.addAttribute("listaInstSalud", objIInstitucionSaludService.listarInstitucionSalud());
+        model.addAttribute("listaInstPrevision", objIInstPrevService.listarInstPrev());
+        return "editarLiquidacion";
     }
 
+    @PostMapping("/actualizar/{idLiquidacion}")
+    public String actualizarLiquidacion(@ModelAttribute Liquidacion liquidacion, @PathVariable int idLiquidacion) {
+        objILiquidacionService.actualizarLiquidacion(liquidacion, idLiquidacion);
+        return "redirect:/liquidacion";
+    }
 
-    @DeleteMapping("/{idLiquidacion}")
-    public void eliminarLiquidacionPorId(@PathVariable long idLiquidacion) {objILiquidacionService.eliminarLiquidacionPorId(idLiquidacion);}
+    @PostMapping("/eliminar/{idLiquidacion}")
+    public String eliminarLiquidacionPorId(@PathVariable long idLiquidacion) {
+        objILiquidacionService.eliminarLiquidacionPorId(idLiquidacion);
+        return "redirect:/liquidacion";
+    }
 
 }

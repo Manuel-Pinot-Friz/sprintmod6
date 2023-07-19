@@ -1,5 +1,8 @@
 package cl.awakelab.sprintmod6.repository;
 
-public interface IUsuarioRepository {
+import cl.awakelab.sprintmod6.entity.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 }

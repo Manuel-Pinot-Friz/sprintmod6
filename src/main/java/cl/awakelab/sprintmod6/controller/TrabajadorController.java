@@ -1,6 +1,8 @@
 package cl.awakelab.sprintmod6.controller;
 
 import cl.awakelab.sprintmod6.entity.Trabajador;
+import cl.awakelab.sprintmod6.service.IInstPrevService;
+import cl.awakelab.sprintmod6.service.IInstitucionSaludService;
 import cl.awakelab.sprintmod6.service.ITrabajadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,10 @@ import java.util.List;
 public class TrabajadorController {
     @Autowired
     ITrabajadorService objITrabajadorService;
+    @Autowired
+    IInstitucionSaludService objIInstitucionSaludService;
+    @Autowired
+    IInstPrevService objIInstPrevService;
 
     @GetMapping
     public String listarTrabajadores(Model model) {
@@ -22,9 +28,16 @@ public class TrabajadorController {
         return "listarTrabajadores";
     }
 
+    @GetMapping("/crearTrabajador")
+    public String mostrarFormularioCrearTrabajador(Model model){
+        model.addAttribute("listaInstSalud", objIInstitucionSaludService.listarInstitucionSalud());
+        model.addAttribute("listaInstPrevision", objIInstPrevService.listarInstPrev());
+        return "crearTrabajador";
+    }
     @PostMapping("/crearTrabajador")
-    public Trabajador crearTrabajador(@RequestBody Trabajador trabajador){
-        return objITrabajadorService.crearTrabajador(trabajador);
+    public String crearTrabajador(@ModelAttribute Trabajador trabajador){
+        objITrabajadorService.crearTrabajador(trabajador);
+        return "redirect:/crearTrabajador";
     }
 
 
@@ -32,17 +45,28 @@ public class TrabajadorController {
     public String buscarTrabajadorPorId(@PathVariable int idTrabajador, Model model) {
         Trabajador trabajador = objITrabajadorService.buscarTrabajadorPorId(idTrabajador);
         model.addAttribute("trabajador",trabajador);
-        return "trabajador";
+        return "redirect:/trabajador";
+    }
+
+    @PostMapping("/editar/{idTrabajador}")
+    public String mostrarFormularioEditarTrabajador(@PathVariable int idTrabajador, Model model){
+        model.addAttribute("trabajador", objITrabajadorService.buscarTrabajadorPorId(idTrabajador));
+        model.addAttribute("listaInstSalud", objIInstitucionSaludService.listarInstitucionSalud());
+        model.addAttribute("listaInstPrevision", objIInstPrevService.listarInstPrev());
+        return "editarTrabajador";
+    }
+
+    @PostMapping("/actualizar/{idTrabajador}")
+    public String actualizarTrabajador(@ModelAttribute Trabajador trabajador, @PathVariable int idTrabajador) {
+        objITrabajadorService.actualizarTrabajador(trabajador, idTrabajador);
+        return "redirect:/trabajador";
     }
 
 
-    @PutMapping
-    public Trabajador actualizarTrabajador(@RequestBody Trabajador trabajador) {
-        return objITrabajadorService.actualizarTrabajador(trabajador);
+    @PostMapping("/eliminar/{idTrabajador}")
+    public String eliminarTrabajadorPorId(@PathVariable int idTrabajador) {
+        objITrabajadorService.eliminarTrabajadorPorId(idTrabajador);
+        return "redirect:/trabajador";
     }
-
-
-    @DeleteMapping("/{idTrabajador}")
-    public void eliminarTrabajadorPorId(@PathVariable int idTrabajador) {objITrabajadorService.eliminarTrabajadorPorId(idTrabajador);}
 
 }

@@ -33,7 +33,7 @@ public class Liquidacion {
     //Relacion liquidacion - institucion previsional
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL,optional = false)
     @JoinColumn(name = "id_inst_previsional",nullable = false)
-    private InstitucionPrevision instPrevisional;
+    private InstPrev instPrevisional;
 
     @Column(name = "monto_inst_previsional")
     private int montoInstPrevisional;

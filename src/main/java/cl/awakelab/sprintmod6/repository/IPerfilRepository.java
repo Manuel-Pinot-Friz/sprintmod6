@@ -1,5 +1,8 @@
 package cl.awakelab.sprintmod6.repository;
 
-public interface IPerfilRepository {
+import cl.awakelab.sprintmod6.entity.Perfil;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IPerfilRepository extends JpaRepository<Perfil, Integer> {
 
 }

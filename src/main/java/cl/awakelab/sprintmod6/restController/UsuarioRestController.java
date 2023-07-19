@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping{"api/usuario"}
+@RequestMapping("api/usuario")
+@RestController
 public class UsuarioRestController {
 
     @Autowired
@@ -29,7 +30,7 @@ public class UsuarioRestController {
     }
 
     @PutMapping
-    public Usuario actualizarUsuario2(@RequestBody Usuario usuarioActualizar){
+    public Usuario actualizarUsuario2(@RequestBody Usuario usuarioActualizar, @PathVariable int idUsuario){
         return objUsuarioService.actualizarUsuario(usuarioActualizar, idUsuario);
     }
 }
