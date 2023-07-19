@@ -3,6 +3,7 @@ package cl.awakelab.sprintmod6.service.serviceImpl;
 import cl.awakelab.sprintmod6.entity.Empleador;
 import cl.awakelab.sprintmod6.repository.IEmpleadorRepository;
 import cl.awakelab.sprintmod6.service.IEmpleadorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.NoSuchElementException;
 
 @Service("empleadorImpl")
 public class EmpleadorImpl implements IEmpleadorService {
+    @Autowired
     IEmpleadorRepository objIEmpleadorRepo;
     @Override
     public List<Empleador> listarEmpleador() {

@@ -28,8 +28,8 @@ public class EmpleadorController {
     }
 
     @GetMapping("/crearEmpleador")
-    public String mostrarFormularioCrearUsuario(Model model) {
-        model.addAttribute("empleador", objIEmpleadorService.listarEmpleador());
+    public String mostrarFormularioCrearEmpleador(Model model) {
+        model.addAttribute("usuarios", objIUsuarioService.listarUsuarios());
         return "crearEmpleador";
     }
 
