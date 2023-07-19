@@ -27,7 +27,7 @@ public class Trabajador {
     //Relacion trabajador - inst. prevision
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "id_inst_prevision",nullable = false)
-    private InstitucionPrevision instPrevision;
+    private InstPrev instPrevision;
 
     //Relacion trabajador - inst. salud
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)

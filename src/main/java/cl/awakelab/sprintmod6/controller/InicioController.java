@@ -5,18 +5,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/inicioSesion")
 public class InicioController {
-    @GetMapping("/")
+    @GetMapping("/home")
     public String index(){
-        return "index";
+        return "home";
     }
 
-    @GetMapping("/inicioSesion")
+    @GetMapping("/login")
     public String inicioSesion(){return "login";}
 
     @GetMapping("/registro")
     public String registro(){
         return "registro";
     }
+
+    @GetMapping("/bienvenida")
+    public String bienvenida() { return "bienvenida"; }
+
+
 }

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+  />
+</head>
+<body>
+<header th:include="~{../static/html/header.html}"></header>
+<main class="p-3">
+  <section class="container d-flex justify-content-center">
+    <div class="card p-3">
+      <h3 class="text-center">Crear Trabajador</h3>
+      <form th:action="@{/trabajador/actualizar/{idTrabajador}(idTrabajador=${trabajador.getIdTrabajador()})}" method="post">
+        <div class="mb-3">
+          <label for="run">Run</label>
+          <input type="text" class="form-control" name="run" id="run" th:value="${trabajador.getRun()}" required/>
+        </div>
+        <div class="mb-3">
+          <label for="nombre">Nombre</label>
+          <input
+                  type="text"
+                  class="form-control"
+                  name="nombre"
+                  id="nombre"
+                  th:value="${trabajador.getNombre()}"
+                  required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="apellido1">apellido 1</label>
+          <input
+                  type="text"
+                  class="form-control"
+                  name="apellido1"
+                  id="apellido1"
+                  th:value="${trabajador.getApellido1()}"
+                  required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="apellido2">Apellido 2 (opcional)</label>
+          <input
+                  type="text"
+                  class="form-control"
+                  name="apellido2"
+                  th:value="${trabajador.getApellido2()}"
+                  id="apellido2"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="telefono">Telefono</label>
+          <input
+                  type="text"
+                  class="form-control"
+                  name="telefono"
+                  id="telefono"
+                  th:value="${trabajador.getTelefono()}"
+                  required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" th:value="${trabajador.getEmail()}" required/>
+        </div>
+        <div class="my-2">
+          <label class="form-label">Institucion Salud</label>
+          <select name="instSalud" class="form-select">
+            <option class="dropdown-item" th:each="instSalud:${listaInstSalud}" th:value="${instSalud.idInstSalud}"
+                    th:label="${instSalud.descripcion}"
+                    th:selected="${trabajador.instSalud.idInstSalud == instSalud.idInstSalud}?'true':'false'"
+            >
+            </option>
+          </select>
+        </div>
+        <div class="my-2">
+          <label class="form-label">Institucion Prevision</label>
+          <select name="instPrevision" class="form-select">
+            <option class="dropdown-item" th:value="${instPrevision.idInstPrevision}"
+                    th:label="${instPrevision.descripcion}"
+                    th:each="instPrevision:${listaInstPrevision}" th:selected="${trabajador.instPrevision.idInstPrevision == instPrevision.idInstPrevision}?'true':'false'">
+            </option>
+          </select>
+        </div>
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary btn-lg">
+            Actualizar
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+<footer th:include="~{../static/html/footer.html}">
+</footer>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"
+></script>
+</body>
+</html>

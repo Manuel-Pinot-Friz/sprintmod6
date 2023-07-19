@@ -7,10 +7,11 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "Institucion_Prevision")
-public class InstitucionPrevision {
+@Table(name = "InstPrev")
+public class InstPrev {
     @Id
-    @Column(name = "id_inst_prevision")
+    @Column(name = "idInstPrev")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idInstPrevision;
     @Column
     private String descripcion;

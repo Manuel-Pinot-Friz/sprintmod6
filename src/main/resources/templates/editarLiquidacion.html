@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+  />
+</head>
+<body>
+<header th:include="~{../static/html/header.html}"></header>
+<main class="p-3">
+  <section class="container d-flex justify-content-center">
+    <div class="card p-3">
+      <h3 class="text-center">Editar Liquidacion</h3>
+      <form th:action="@{/liquidacion/crearLiquidacion}" method="post">
+        <div class="mb-3">
+          <label for="idTrabajador">Trabajador</label>
+          <select name="trabajador.idTrabajador" class="form-select" required id="idTrabajador">
+            <option class="dropdown-item" th:each="trabajador:${trabajadores}"
+                    th:value="${trabajador.idTrabajador}"
+                    th:label="${trabajador.nombre}"
+                    th:selected="${liquidacion.trabajador.idTrabajador == trabajador.idTrabajador}?'true':'false'"
+            >
+            </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="periodo">Periodo</label>
+          <input
+                  type="date"
+                  class="form-control"
+                  name="periodo"
+                  id="periodo"
+                  th:value="${liquidacion.getPeriodo()}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="sueldoImponible">Sueldo imponible</label>
+          <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  name="sueldoImponible"
+                  id="sueldoImponible"
+                  th:value="${liquidacion.getSueldoImponible()}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="sueldoLiquido">Sueldo liquido</label>
+          <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  name="sueldoLiquido"
+                  id="sueldoLiquido"
+                  th:value="${liquidacion.getSueldoLiquido()}"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Institucion Salud</label>
+          <select name="instSalud" class="form-select">
+            <option class="dropdown-item" th:each="instSalud:${listaInstSalud}"
+                    th:value="${instSalud.idInstSalud}"
+                    th:label="${instSalud.descripcion}"
+                    th:selected="${liquidacion.instSalud.idInstSalud == instSalud.idInstSalud}?'true':'false'"
+            >
+            </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="montoInstSalud">Monto Institucion Salud</label>
+          <input
+                  type="number"
+                  class="form-control"
+                  name="montoInstSalud"
+                  id="montoInstSalud"
+                  th:value="${liquidacion.getMontoInstSalud()}"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Institucion Prevision</label>
+          <select name="instPrevisional" class="form-select">
+            <option class="dropdown-item" th:value="${instPrevision.idInstPrevision}"
+                    th:label="${instPrevision.descripcion}"
+                    th:each="instPrevision:${listaInstPrevision}"
+                    th:selected="${liquidacion.instPrevisional.idInstPrevision == instPrevision.idInstPrevision}?'true':'false'"
+            >
+            </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="montoInstPrevision">Monto Institucion Prevision</label>
+          <input
+                  type="number"
+                  class="form-control"
+                  name="montoInstPrevision"
+                  id="montoInstPrevision"
+                  th:value="${liquidacion.getMontoInstPrevisional()}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="totalDescuento">Total descuento</label>
+          <input
+                  type="int"
+                  class="form-control"
+                  name="totalDescuento"
+                  id="totalDescuento"
+                  th:value="${liquidacion.getTotalDescuento()}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="totalHaberes">Total haberes</label>
+          <input
+                  type="text"
+                  class="form-control"
+                  name="totalHaberes"
+                  id="totalHaberes"
+                  th:value="${liquidacion.getTotalHaberes()}"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="anticipo" class="form-label">Anticipo</label>
+          <input type="number" name="anticipo" class="form-control" id="anticipo"
+                 th:value="${liquidacion.getAnticipo()}"/>
+        </div>
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary btn-lg">
+            Actualizar
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+<footer th:include="~{../static/html/footer.html}">
+</footer>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"
+></script>
+</body>
+</html>
