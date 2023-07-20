@@ -1,6 +1,7 @@
 package cl.awakelab.sprintmod6.controller;
 
 import cl.awakelab.sprintmod6.entity.Empleador;
+import cl.awakelab.sprintmod6.entity.Usuario;
 import cl.awakelab.sprintmod6.service.IEmpleadorService;
 import cl.awakelab.sprintmod6.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class EmpleadorController {
 
     @PostMapping("/crearEmpleador")
     public String crearEmpleador(@ModelAttribute Empleador empleador){
+        Usuario usuario = new Usuario();
+        usuario = objIUsuarioService.buscarUsuarioPorId(empleador.getUsuario().getIdUsuario());
+        empleador.setUsuario(usuario);
         objIEmpleadorService.crearEmpleador(empleador);
         return "/crearEmpleador";
     }

@@ -7,11 +7,10 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "InstPrev")
+@Table(name = "Institucion_Prevision")
 public class InstPrev {
     @Id
-    @Column(name = "idInstPrev")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_inst_prevision")
     private int idInstPrevision;
     @Column
     private String descripcion;
@@ -24,6 +23,5 @@ public class InstPrev {
 
     @OneToMany(mappedBy = "instPrevisional")
     List<Liquidacion> listaLiquidaciones;
-
 
 }

@@ -25,12 +25,12 @@ public class Trabajador {
     private String email;
 
     //Relacion trabajador - inst. prevision
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_inst_prevision",nullable = false)
     private InstPrev instPrevision;
 
     //Relacion trabajador - inst. salud
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_inst_salud", nullable = false)
     private InstitucionSalud instSalud;
 
@@ -41,7 +41,6 @@ public class Trabajador {
     @ManyToMany(mappedBy = "listaTrabajadores")
     List<Empleador> listaEmpleadores;
 
-    //Relacion trabajador - liquidacion
     @OneToMany(mappedBy = "trabajador")
     List<Liquidacion> listaLiquidaciones;
 }

@@ -33,7 +33,7 @@ public class UsuarioController {
     @PostMapping("/crearUsuario")
     public String crearUsuario(@ModelAttribute Usuario usuario) {
         objIUsuarioService.crearUsuario(usuario);
-        return "redirect:/listarUsuarios";
+        return "redirect:/usuario";
     }
 
     @GetMapping("/{idUsuario}")
@@ -51,7 +51,6 @@ public class UsuarioController {
 
     @PostMapping("/actualizar/{idUsuario}")
     public String actualizarUsuario(@ModelAttribute Usuario usuario, @PathVariable int idUsuario) {
-        usuario.setFechaCreacion(LocalDate.from(LocalDateTime.now()));
         objIUsuarioService.actualizarUsuario(usuario, idUsuario);
         return "redirect:/usuario";
     }
