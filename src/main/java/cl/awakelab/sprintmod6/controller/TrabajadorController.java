@@ -1,6 +1,7 @@
 package cl.awakelab.sprintmod6.controller;
 
 import cl.awakelab.sprintmod6.entity.Trabajador;
+import cl.awakelab.sprintmod6.service.IEmpleadorService;
 import cl.awakelab.sprintmod6.service.IInstPrevService;
 import cl.awakelab.sprintmod6.service.IInstitucionSaludService;
 import cl.awakelab.sprintmod6.service.ITrabajadorService;
@@ -19,7 +20,9 @@ public class TrabajadorController {
     @Autowired
     IInstitucionSaludService objIInstitucionSaludService;
     @Autowired
-    IInstPrevService objIInstPrevService;
+    IInstPrevService objIInstitucionPrevisionService;
+    @Autowired
+    IEmpleadorService objIEmpleadorService;
 
     @GetMapping
     public String listarTrabajadores(Model model) {
@@ -31,13 +34,14 @@ public class TrabajadorController {
     @GetMapping("/crearTrabajador")
     public String mostrarFormularioCrearTrabajador(Model model){
         model.addAttribute("listaInstSalud", objIInstitucionSaludService.listarInstitucionSalud());
-        model.addAttribute("listaInstPrevision", objIInstPrevService.listarInstPrev());
+        model.addAttribute("listaInstPrevision", objIInstitucionPrevisionService.listarInstPrev());
+        model.addAttribute("empleadores", objIEmpleadorService.listarEmpleador());
         return "crearTrabajador";
     }
     @PostMapping("/crearTrabajador")
     public String crearTrabajador(@ModelAttribute Trabajador trabajador){
         objITrabajadorService.crearTrabajador(trabajador);
-        return "redirect:/crearTrabajador";
+        return "redirect:/trabajador";
     }
 
 
@@ -50,9 +54,10 @@ public class TrabajadorController {
 
     @PostMapping("/editar/{idTrabajador}")
     public String mostrarFormularioEditarTrabajador(@PathVariable int idTrabajador, Model model){
+        model.addAttribute("empleadores", objIEmpleadorService.listarEmpleador());
         model.addAttribute("trabajador", objITrabajadorService.buscarTrabajadorPorId(idTrabajador));
         model.addAttribute("listaInstSalud", objIInstitucionSaludService.listarInstitucionSalud());
-        model.addAttribute("listaInstPrevision", objIInstPrevService.listarInstPrev());
+        model.addAttribute("listaInstPrevision", objIInstitucionPrevisionService.listarInstPrev());
         return "editarTrabajador";
     }
 

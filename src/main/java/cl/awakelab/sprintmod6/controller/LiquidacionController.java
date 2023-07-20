@@ -20,9 +20,9 @@ public class LiquidacionController {
     @Autowired
     ITrabajadorService objITrabajadorService;
     @Autowired
-    IInstPrevService objIInstPrevService;
+    IInstPrevService objIInstitucionPrevision;
     @Autowired
-    IInstitucionSaludService objIInstitucionSaludService;
+    IInstitucionSaludService objIInstitucionSalud;
 
     @GetMapping
     public String listarLiquidaciones(Model model) {
@@ -30,19 +30,20 @@ public class LiquidacionController {
         model.addAttribute("liquidaciones", listaLiquidaciones);
         return "listarLiquidaciones";
     }
-
+    //    @GetMapping("/crearLiquidacion")
+//    public String mostrarFormularioCrearLiquidacion(){return "crearLiquidacion";}
     @GetMapping("/crearLiquidacion")
     public String mostrarFormularioCrearLiquidacion(Model model){
         model.addAttribute("trabajadores", objITrabajadorService.listarTrabajadores());
-        model.addAttribute("listaInstSalud", objIInstitucionSaludService.listarInstitucionSalud());
-        model.addAttribute("listaInstPrevision", objIInstPrevService.listarInstPrev());
+        model.addAttribute("listaInstSalud", objIInstitucionSalud.listarInstitucionSalud());
+        model.addAttribute("listaInstPrevision", objIInstitucionPrevision.listarInstPrev());
         return "crearLiquidacion";
     }
 
     @PostMapping("/crearLiquidacion")
     public String crearLiquidacion(@ModelAttribute Liquidacion liquidacion){
         objILiquidacionService.crearLiquidacion(liquidacion);
-        return "redirect:/crearLiquidacion";
+        return "redirect:/liquidacion";
     }
 
     @GetMapping("/{idLiquidacion}")
@@ -53,16 +54,16 @@ public class LiquidacionController {
     }
 
     @PostMapping("/editar/{idLiquidacion}")
-    public String mostrarFormularioEditarLiquidacion(@PathVariable int idLiquidacion, Model model){
+    public String mostrarFormularioEditarLiquidacion(@PathVariable long idLiquidacion, Model model){
         model.addAttribute("liquidacion", objILiquidacionService.buscarLiquidacionPorId(idLiquidacion));
         model.addAttribute("trabajadores", objITrabajadorService.listarTrabajadores());
-        model.addAttribute("listaInstSalud", objIInstitucionSaludService.listarInstitucionSalud());
-        model.addAttribute("listaInstPrevision", objIInstPrevService.listarInstPrev());
+        model.addAttribute("listaInstSalud", objIInstitucionSalud.listarInstitucionSalud());
+        model.addAttribute("listaInstPrevision", objIInstitucionPrevision.listarInstPrev());
         return "editarLiquidacion";
     }
-
+    //Todo: revisar duplica no actualiza
     @PostMapping("/actualizar/{idLiquidacion}")
-    public String actualizarLiquidacion(@ModelAttribute Liquidacion liquidacion, @PathVariable int idLiquidacion) {
+    public String actualizarLiquidacion(@ModelAttribute Liquidacion liquidacion, @PathVariable long idLiquidacion) {
         objILiquidacionService.actualizarLiquidacion(liquidacion, idLiquidacion);
         return "redirect:/liquidacion";
     }

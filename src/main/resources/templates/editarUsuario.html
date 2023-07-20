@@ -11,11 +11,14 @@
 </head>
 <body>
 <header th:include="~{../static/html/header.html}"></header>
-<h3 class="text-center">Editar usuario</h3>
-<form
-        th:action="@{/usuario/actualizar/{idUsuario}(idUsuario=${usuario.getIdUsuario()})}"
-        method="post"
->
+<main class="p-3">
+  <section class="container d-flex justify-content-center">
+    <div class="card p-3">
+      <h3 class="text-center">Editar usuario</h3>
+      <form
+              th:action="@{/usuario/actualizar/{idUsuario}(idUsuario=${usuario.getIdUsuario()})}"
+              method="post"
+      >
   <div class="mb-3">
     <label for="run">Run</label>
     <input
@@ -120,7 +123,16 @@
         </label>
       </div>
     </div>
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-primary btn-lg">
+        Actualizar
+      </button>
+    </div>
   </div>
+      </form>
+    </div>
+  </section>
+</main>
   <footer th:include="~{../static/html/footer.html}">
   </footer>
   <script
