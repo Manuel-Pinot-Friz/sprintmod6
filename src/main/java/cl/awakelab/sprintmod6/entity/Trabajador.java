@@ -1,5 +1,6 @@
 package cl.awakelab.sprintmod6.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -25,6 +26,7 @@ public class Trabajador {
     private String email;
 
     //Relacion trabajador - inst. prevision
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_inst_prevision",nullable = false)
     private InstPrev instPrevision;
@@ -38,9 +40,16 @@ public class Trabajador {
     private long telefono;
 
     //Relacion tabla intermedia
-    @ManyToMany(mappedBy = "listaTrabajadores")
+//    @ManyToMany(mappedBy = "listaTrabajadores")
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "Empl_Trab",
+            joinColumns = @JoinColumn(name = "id_trabajador", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "id_empleador", nullable = false))
     List<Empleador> listaEmpleadores;
 
-    @OneToMany(mappedBy = "trabajador")
+    //Relacion trabajador - liquidacion
+    @JsonIgnore
+    @OneToMany(mappedBy = "trabajador",cascade = CascadeType.ALL)
     List<Liquidacion> listaLiquidaciones;
 }
